@@ -1,7 +1,7 @@
 {
-  "name": "react-rpc",
+  "name": "hprose-react",
   "version": "1.0.0",
-  "description": " ",
+  "description": "hprose react rpc",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,9 +11,10 @@
     "url": "git+https://github.com/vlorc/hprose-react.git"
   },
   "keywords": [
-    "hprose-react"
+    "hprose",
+    "react"
   ],
-  "author": "kakoyi",
+  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/vlorc/hprose-react/issues"
