@@ -1,0 +1,26 @@
+{
+  "name": "react-rpc",
+  "version": "1.0.0",
+  "description": " ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vlorc/hprose-react.git"
+  },
+  "keywords": [
+    "hprose-react"
+  ],
+  "author": "kakoyi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vlorc/hprose-react/issues"
+  },
+  "homepage": "https://github.com/vlorc/hprose-react#readme",
+  "dependencies": {
+    "hprose-html5": "^2.0.34",
+    "msgpack-lite": "^0.1.26"
+  }
+}
