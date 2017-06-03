@@ -1,6 +1,5 @@
 {
   "name": "hprose-react",
-  "version": "1.0.3",
   "description": "hprose react rpc",
   "main": "dist/index.js",
   "scripts": {

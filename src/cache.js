@@ -52,8 +52,8 @@ class Storage{
                 /*sync: (key) => null,*/
             };
 
-        option.encode = option.encode || (v => buf2str(msgpack.encode(v)));
-        option.decode = option.decode || (v => msgpack.decode(str2buf(v)));
+        this.__option.encode = this.__option.encode || (v => buf2str(msgpack.encode(v)));
+        this.__option.decode = this.__option.decode || (v => msgpack.decode(str2buf(v)));
         
         return last;
     };
@@ -97,23 +97,23 @@ class Storage{
     };
 
     getItem = (key,sync) => {
-        return this.load(this.__option.formatKey(key),sync);
+        return this.load(this.formatKey(key),sync);
     };
 
     setItem = (key,value) => {
-        return this.save(this.__option.formatKey(key), value);
+        return this.save(this.formatKey(key), value);
     };
 
     remove = (key) => {
-        return this.removeRawItem(this.__option.formatKey(key));
+        return this.removeRawItem(this.formatKey(key));
     };
 
     save = (key,value,expires) => {
-        return this.setRawItem(key,this.__option.formatValue(value,undefined === expires ? this.__option.expires : expires));
+        return this.setRawItem(key,this.formatValue(value,undefined === expires ? this.__option.expires : expires));
     };
 
     load = (key,sync) => {
-        return this.getRawItem(key,this.__option.parseValue,sync || this.__option.sync,this.save);
+        return this.getRawItem(key,this.parseValue,sync || this.__option.sync,this.save);
     };
 
     clear = () => {
