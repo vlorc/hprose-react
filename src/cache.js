@@ -34,55 +34,53 @@ class Storage{
 
     }
     formatKey = (key) =>{
-        return buf2str(msgpack.encode(key));
+        return this.__option.encode(key);
     };
-    formatValue = (value,expires) =>{
+    formatValue = (value,expires) => {
         let pack = [value,Date.now()];
         if(expires){
             pack.push(pack[1] + expires * 1000);
         }
-        let buf = msgpack.encode(pack);
-        return buf2str(buf);
+        return this.__option.encode(pack);
     };
 
-    setOption = (option) =>{
+    setOption = (option) => {
         let last = this.__option;
         this.__option = option || {
                 defaultValue:null,
                 expires:60 * 2,
                 /*sync: (key) => null,*/
             };
-            this.__option.parseKey = this.__option.parseKey || this.parseKey;
-            this.__option.parseValue = this.__option.parseValue || this.parseValue;
-            this.__option.formatKey = this.__option.formatKey || this.formatKey;
-            this.__option.formatValue = this.__option.formatValue || this.formatValue;
+
+        option.encode = option.encode || (v => buf2str(msgpack.encode(v)));
+        option.decode = option.decode || (v => msgpack.decode(str2buf(v)));
+        
         return last;
     };
-    getOption = () =>{
-        return this.option;
+    getOption = () => {
+        return this.__option;
     };
 
     parseKey = (key)  => {
-        return msgpack.decode(str2buf(key));
+        return this.__option.decode(key);
     };
-    parseValue = (value,defValue) =>{
+    parseValue = (value,defValue) => {
         if(value){
-            let buf = str2buf(value);
-            let pack =  msgpack.decode(buf);
+            let pack = this.__option.decode(value);
             if(Array.isArray(pack) && (pack.length < 3 || Date.now() < pack[2])){
                 defValue = pack[0];
             }
         }
         return defValue;
     };
-    removeRawItem = (key) =>{
+    removeRawItem = (key) => {
         return this.__local.removeItem(key);
     };
-    setRawItem = (key,value) =>{
+    setRawItem = (key,value) => {
         return this.__local.setItem(key,value);
     };
 
-    getRawItem = (key,parse,sync,save) =>{
+    getRawItem = (key,parse,sync,save) => {
         let value = this.__getRawItem(this.__local.getItem(key));
 
         if(parse){
@@ -98,27 +96,27 @@ class Storage{
         return value;
     };
 
-    getItem = (key,sync) =>{
+    getItem = (key,sync) => {
         return this.load(this.__option.formatKey(key),sync);
     };
 
-    setItem = (key,value) =>{
+    setItem = (key,value) => {
         return this.save(this.__option.formatKey(key), value);
     };
 
-    remove = (key) =>{
+    remove = (key) => {
         return this.removeRawItem(this.__option.formatKey(key));
     };
 
-    save = (key,value,expires) =>{
+    save = (key,value,expires) => {
         return this.setRawItem(key,this.__option.formatValue(value,undefined === expires ? this.__option.expires : expires));
     };
 
-    load = (key,sync) =>{
+    load = (key,sync) => {
         return this.getRawItem(key,this.__option.parseValue,sync || this.__option.sync,this.save);
     };
 
-    clear = () =>{
+    clear = () => {
         return this.__local.clear();
     };
 }
