@@ -1,11 +1,12 @@
 {
   "name": "hprose-react",
+  "version": "1.0.8",
   "description": "hprose react rpc",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src --out-dir dist",
-    "publish":"npm publish --registry=http://registry.npmjs.org"
+    "push": "npm publish --registry=http://registry.npmjs.org"
   },
   "repository": {
     "type": "git",

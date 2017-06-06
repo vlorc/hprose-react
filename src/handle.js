@@ -46,7 +46,8 @@ function logHandler(name, args, context, next) {
 }
 
 function tokenBatchesHandler(batches, context, next) {
-    for (let v of batches) {
+    for (let i in batches) {
+        let v = batches[i];
         if (v.name.startsWith("cache_")) {
             v.name = v.name.substr(6);
         }

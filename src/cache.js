@@ -89,9 +89,15 @@ class Storage{
 
         if(sync){
             save = save || this.__option.save || this.setRawItem;
-            value = value.then(
-                v => v ? v : sync(key).then(res =>{ save(key,res); return res; })
-            );
+            value = value.then(v => {
+                if(!v){
+                    v = sync(key);
+                    if(v){
+                        v.then(res => save(key,res));
+                    }
+                }
+                return v;
+            });
         }
         return value;
     };

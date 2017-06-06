@@ -9,7 +9,8 @@ function parseFunction(src) {
         let list = r[1].split('_');
         let func = list.pop();
         let last = root;
-        for (let name of list) {
+        for (let i in list) {
+            let name = list[i];
             name = name.charAt(0).toLowerCase() + name.substr(1);
             if(!last[0][name]){
                 last[0][name] = [{}];
